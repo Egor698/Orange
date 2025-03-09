@@ -57,6 +57,7 @@ def main(page: ft.Page):
                 print(el)
                 star.value = data[4]
                 lvl.value = data[3]
+                
                 page.clean() 
                 page.add(playUI)
                 page.update()
@@ -81,7 +82,16 @@ def main(page: ft.Page):
     ], horizontal_alignment=ft.CrossAxisAlignment.CENTER)
    
 
+    #механника подарков
+    def gifesmex(e):
+        gifesnack = ft.SnackBar(content=ft.Row([gifeconteiner]), width=350)
+        gifesnack.open = True
+        gifeimage = ft.Image(src="https://cdn-icons-png.flaticon.com/128/6281/6281687.png")
+        gifeconteiner = ft.Container(bgcolor=ft.Colors.BLACK, width=350, height=400, content=ft.Row([gifeimage], alignment=ft.MainAxisAlignment.CENTER), alignment=ft.alignment.center)
+        
+        page.add(gifeconteiner)
     #обновление счета в БД
+    
     def score_upBD(e):
 
         db = sqlite3.connect("Orange3.db")
@@ -94,7 +104,8 @@ def main(page: ft.Page):
         db.close()
     #мехфника lvlbar 
     def mexlvlbar(e):
-        if lvlbar.value == 1:
+       if lvlbar.value == 1:
+            gifesmex(e)
             lvlbar.value = 0
             db = sqlite3.connect("Orange3.db")
 
@@ -105,8 +116,6 @@ def main(page: ft.Page):
             db.close()
             lvl.value += 1
             page.update()
-    
-   
     #механика
     def score_up(e):
         n = score.data / 100
@@ -125,7 +134,7 @@ def main(page: ft.Page):
         elif n.is_integer() and n != 0:
             snackBar100 = ft.SnackBar(content=ft.Row([ft.Text("🍪 +100", size=20, color=ft.Colors.BROWN_800, weight=ft.FontWeight.W_500)], alignment=ft.MainAxisAlignment.CENTER), bgcolor=ft.Colors.BLACK26)
             progressBar.value = 0
-            lvlbar.value += 0.1
+            lvlbar.value += 0.3
             mexlvlbar(e)
             page.update()
             page.open(snackBar100)
@@ -141,6 +150,7 @@ def main(page: ft.Page):
     #контейнер с прогрессом
 
     #lvl.value - левел, lvlbar.value, gifebocks
+   
     lvl = ft.Text(value="1", weight=ft.FontWeight.W_700)
     lvlbar = ft.ProgressBar(color=ft.Colors.BROWN_300, width=200, value=0, border_radius=20, height=15)
     gifebocks = ft.Image(src="https://cdn-icons-png.flaticon.com/128/8146/8146553.png", width=40, height=40, fit=ft.ImageFit.CONTAIN)
